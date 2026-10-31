@@ -190,4 +190,4 @@ qr.example.com {
 
 ## 📄 License
 
-Released under the [MIT License](https://opensource.org/licenses/MIT).
+Released under the [GNU GPL V3](https://www.gnu.org/licenses/gpl-3.0.md).
