@@ -30,7 +30,7 @@ EXPOSE 3055
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3055/api/config || exit 1
+  CMD wget -q -O - http://127.0.0.1:3055/health || exit 1
 
 # Start the application
 CMD ["node", "server.js"]

@@ -1,2 +1,1 @@
-# Ephemeral uploads directory
-# Files uploaded here are automatically deleted after 1 hour (TTL).
+# Keep uploads directory in git

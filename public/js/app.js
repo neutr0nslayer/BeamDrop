@@ -4,11 +4,10 @@
 
   // State
   let config = {
-    port: 3000,
+    port: 3055,
     maxFileSizeMB: 150,
     fileTtlMinutes: 60,
-    detectedHost: window.location.origin,
-    networkIps: []
+    publicUrl: window.location.origin
   };
 
   let stagedFile = null;
@@ -38,7 +37,6 @@
   const resultFilename = document.getElementById('result-filename');
   const resultFilesize = document.getElementById('result-filesize');
   const liveCountdown = document.getElementById('live-countdown');
-  const hostSelector = document.getElementById('host-selector');
   const copyLinkInput = document.getElementById('copy-link-input');
   const btnCopyLink = document.getElementById('btn-copy-link');
   const btnDirectDownload = document.getElementById('btn-direct-download');
@@ -83,73 +81,16 @@
     }, 4000);
   }
 
-  // Fetch Server Config & Network IPs
+  // Fetch Server Config
   async function fetchConfig() {
     try {
       const res = await fetch('/api/config');
       if (res.ok) {
         config = await res.json();
-        setupHostSelector();
       }
     } catch (e) {
-      console.warn('Using default network settings:', e);
-      setupHostSelector();
+      console.warn('Using default config settings:', e);
     }
-  }
-
-  // Setup Host Options
-  function setupHostSelector() {
-    hostSelector.innerHTML = '';
-    const currentOrigin = window.location.origin;
-
-    // Configured public domain (e.g. https://qr.fardin.com.bd)
-    if (config.configuredPublicUrl) {
-      const pubOpt = document.createElement('option');
-      pubOpt.value = config.configuredPublicUrl;
-      pubOpt.textContent = `🌍 Public Domain (${config.configuredPublicUrl}) [Default]`;
-      pubOpt.selected = true;
-      hostSelector.appendChild(pubOpt);
-    }
-
-    // Current browser address
-    if (!config.configuredPublicUrl || currentOrigin !== config.configuredPublicUrl) {
-      const defaultOpt = document.createElement('option');
-      defaultOpt.value = currentOrigin;
-      defaultOpt.textContent = `💻 Current Host (${currentOrigin})`;
-      if (!config.configuredPublicUrl) defaultOpt.selected = true;
-      hostSelector.appendChild(defaultOpt);
-    }
-
-    // If server detected LAN IPs (e.g. 192.168.x.x)
-    if (config.networkIps && config.networkIps.length > 0) {
-      config.networkIps.forEach(net => {
-        const lanUrl = `http://${net.address}:${config.port}`;
-        if (lanUrl !== currentOrigin && lanUrl !== config.configuredPublicUrl) {
-          const opt = document.createElement('option');
-          opt.value = lanUrl;
-          opt.textContent = `📱 Local Wi-Fi (${lanUrl})`;
-          hostSelector.appendChild(opt);
-        }
-      });
-    }
-
-    hostSelector.addEventListener('change', () => {
-      if (activeTransfer) {
-        updateActiveTransferUrl();
-      }
-    });
-  }
-
-  // Update QR Code when host selector changes
-  function updateActiveTransferUrl() {
-    if (!activeTransfer) return;
-    const baseHost = hostSelector.value;
-    const downloadPageUrl = `${baseHost}/d/${activeTransfer.id}`;
-    const directDownloadUrl = `${baseHost}/api/file/${activeTransfer.id}/download`;
-
-    copyLinkInput.value = downloadPageUrl;
-    btnDirectDownload.href = directDownloadUrl;
-    qrImage.src = `/api/qr?text=${encodeURIComponent(downloadPageUrl)}`;
   }
 
   // File Selection Handling
@@ -290,7 +231,19 @@
     resultFilename.textContent = file.name;
     resultFilesize.textContent = formatBytes(file.size);
 
-    updateActiveTransferUrl();
+    const baseHost = config.publicUrl || window.location.origin;
+    const downloadPageUrl = file.downloadPageUrl || `${baseHost}/d/${file.id}`;
+    const directDownloadUrl = file.directDownloadUrl || `${baseHost}/api/file/${file.id}/download`;
+
+    copyLinkInput.value = downloadPageUrl;
+    btnDirectDownload.href = directDownloadUrl;
+
+    if (file.qrDataUrl) {
+      qrImage.src = file.qrDataUrl;
+    } else {
+      qrImage.src = `/api/qr?text=${encodeURIComponent(downloadPageUrl)}`;
+    }
+
     startCountdown(file.expiresAt);
   }
 
@@ -441,11 +394,14 @@
           const res = await fetch(`/api/file/${item.id}`);
           if (res.ok) {
             const data = await res.json();
+            const baseUrl = config.publicUrl || window.location.origin;
             displayTransferResult({
               id: data.id,
               name: data.name,
               size: data.size,
-              expiresAt: data.expiresAt
+              expiresAt: data.expiresAt,
+              downloadPageUrl: `${baseUrl}/d/${data.id}`,
+              directDownloadUrl: `${baseUrl}/api/file/${data.id}/download`
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {

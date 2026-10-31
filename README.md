@@ -11,13 +11,11 @@ Drop any file up to **150 MB**, scan the generated QR code on any device connect
 - **📱 Instant QR Code Transfer**: Drop a file and immediately scan the generated high-resolution QR code using any phone's camera.
 - **⏳ 1-Hour Automatic Expiration (TTL)**: Files and metadata are wiped automatically from disk and memory after 60 minutes.
 - **🛡️ 150 MB File Size Limitation**: Hard limit strictly enforced both on the client UI and the server backend (`HTTP 413 Payload Too Large`).
-- **🌐 Smart Network / LAN IP Auto-Detection**:
-  - Automatically identifies local network IPv4 addresses (e.g., `http://192.168.1.x:3000`).
-  - When scanning from a smartphone on the same Wi-Fi, the QR code points to the reachable LAN address, avoiding `localhost` unreachable errors!
-  - Includes a live network host selector in the UI that updates the QR code in real-time.
+- **🌐 Public Domain & Reverse Proxy Ready**: Designed for direct domain deployment (e.g. `https://qr.fardin.com.bd`) behind Nginx, Caddy, Cloudflare, or Traefik with seamless SSL support.
+- **🛡️ Docker & Restart Resilient**: Crash-proof architecture featuring atomic metadata disk writes, graceful SIGTERM shutdown, stream disconnect error traps, and dedicated Docker container health checks.
 - **🔥 Instant Burn / Self-Destruct Button**: Both sender and recipient can securely erase the file on-demand before the 1-hour timer expires.
 - **🖼️ Built-in Image Preview**: View previews directly on the download page for image formats before downloading.
-- **🐳 Docker & Docker-Compose Ready**: Built on top of `node:20-alpine`, runs as a non-root secure user with health checks and volume support.
+- **🐳 Docker & Docker-Compose Ready**: Built on top of `node:20-alpine`, runs as a non-root secure user with health checks, volume persistence, and `init: true` signal management.
 - **🎨 Glassmorphism Cyberpunk UI**: Sleek, modern responsive interface with real-time upload progress, animated dropzone, and live countdown timer.
 
 ---
@@ -141,7 +139,8 @@ You can configure BeamDrop by setting environment variables in `docker-compose.y
 | `GET` | `/api/file/:id` | Get file metadata and remaining TTL in seconds |
 | `GET` | `/api/file/:id/download` | Direct file binary download stream |
 | `GET` | `/api/qr?text=<url>` | Generate a standalone PNG QR code for any URL |
-| `GET` | `/api/config` | Query server settings, detected LAN IPs, and limits |
+| `GET` | `/api/config` | Query server settings and public domain URL |
+| `GET` | `/health` | Lightweight container health check endpoint |
 | `DELETE` | `/api/file/:id` | Immediately burn/delete the file from storage |
 | `GET` | `/d/:id` | Recipient download landing page |
 
