@@ -1,4 +1,4 @@
-# 🚀 BeamDrop — Ephemeral QR File Transfer & Link Shortener
+# 🚀 BeamDrop — Ephemeral QR File Transfer
 
 A modern, self-hosted, QR-code-based **ephemeral file transfer** and **URL shortener** web application designed for instant sharing between PCs, laptops, smartphones, and tablets.
 
