@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Transfer — BeamDrop</title>
+  <meta name="description" content="Download your ephemeral file securely via BeamDrop. Self-destructs after 1 hour.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Navbar Header -->
+    <header class="nav-header">
+      <a href="/" class="brand" aria-label="BeamDrop Home">
+        <div class="brand-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+            <path d="M7 17v.01"></path>
+            <path d="M17 7v.01"></path>
+            <path d="M7 7v.01"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>BeamDrop <span class="brand-badge">Incoming</span></h1>
+        </div>
+      </a>
+
+      <div class="header-status">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>Encrypted Buffer</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Card -->
+    <main class="main-card download-card" id="main-download-card">
+      
+      <!-- Loading State -->
+      <div id="loading-state" style="padding: 3rem 1rem;">
+        <div class="dropzone-icon-box" style="margin: 0 auto 1.5rem; animation: pulse-dot 1.5s infinite;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3 style="font-family: var(--font-display); font-size: 1.3rem;">Locating ephemeral transfer...</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">Connecting to BeamDrop secure storage</p>
+      </div>
+
+      <!-- Active File Found State -->
+      <div id="file-ready-state" style="display: none;">
+        <div class="download-icon-box" id="file-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+        </div>
+
+        <div class="badge-ttl" style="margin: 0 auto 1.25rem;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Self-destructs in: <strong class="timer-countdown" id="live-countdown">--:--</strong></span>
+        </div>
+
+        <h2 class="download-file-title" id="file-name">filename.ext</h2>
+        <div class="download-file-size" id="file-size">0 MB</div>
+
+        <!-- Optional Image Preview -->
+        <div class="preview-box" id="image-preview-box">
+          <img id="image-preview" src="" alt="File preview">
+        </div>
+
+        <!-- Direct Download Button -->
+        <a href="#" id="btn-download" class="download-action-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download File
+        </a>
+
+        <!-- Extra recipient actions -->
+        <div style="display: flex; gap: 0.75rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
+          <button type="button" class="btn-action-danger" id="btn-burn-recipient">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2 2"></path></svg>
+            Delete Now (Burn)
+          </button>
+          <a href="/" class="btn-action-secondary">
+            Send a File
+          </a>
+        </div>
+      </div>
+
+      <!-- Expired State -->
+      <div class="expired-card" id="expired-state">
+        <div class="expired-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+        </div>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.75rem;">Transfer Expired</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 420px; margin: 0 auto 1.5rem; line-height: 1.5;">
+          This ephemeral file reached its 1-hour time limit (or was burned) and has been permanently purged from server memory.
+        </p>
+        <a href="/" class="btn-action-primary" style="display: inline-flex;">
+          Upload New File
+        </a>
+      </div>
+
+    </main>
+
+    <footer class="app-footer">
+      <p>BeamDrop • Ephemeral File Transfer System • Auto-purged in 60 minutes</p>
+    </footer>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/download.js"></script>
+</body>
+</html>

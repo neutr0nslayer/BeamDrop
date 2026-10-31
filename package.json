@@ -1,0 +1,26 @@
+{
+  "name": "qr-data-transfer",
+  "version": "1.0.0",
+  "description": "Ephemeral QR-based peer-to-peer style file transfer with 150MB limit and 1-hour auto-destruction.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "qr-code",
+    "file-transfer",
+    "ephemeral",
+    "docker",
+    "airdrop-alternative"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.1"
+  }
+}
