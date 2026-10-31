@@ -17,7 +17,7 @@ COPY package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 
 # Copy application source code
-COPY server.js ./
+COPY server.js deploy.js ./
 COPY public ./public
 
 # Create uploads directory and set permissions for node user

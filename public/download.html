@@ -33,6 +33,25 @@
         </div>
       </a>
 
+      <!-- Navigation Menu -->
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="/" class="nav-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span>File Transfer</span>
+        </a>
+        <a href="/?tab=links" class="nav-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+          <span>Link Shortener</span>
+        </a>
+      </nav>
+
       <div class="header-status">
         <div class="status-pill">
           <span class="status-dot"></span>
@@ -75,18 +94,19 @@
         <!-- Direct Download Button -->
         <a href="#" id="btn-download" class="download-action-btn">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          Download File
+          <span>Download File</span>
         </a>
 
-        <!-- Extra recipient actions -->
-        <div style="display: flex; gap: 0.75rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
-          <button type="button" class="btn-action-danger" id="btn-burn-recipient">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2 2"></path></svg>
-            Delete Now (Burn)
-          </button>
+        <!-- Extra recipient actions (Equal-width aligned buttons) -->
+        <div class="recipient-actions-row">
           <a href="/" class="btn-action-secondary">
-            Send a File
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span>Send a File</span>
           </a>
+          <button type="button" class="btn-action-danger" id="btn-burn-recipient">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            <span>Delete Now (Burn)</span>
+          </button>
         </div>
       </div>
 
@@ -99,15 +119,20 @@
         <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 420px; margin: 0 auto 1.5rem; line-height: 1.5;">
           This ephemeral file reached its 1-hour time limit (or was burned) and has been permanently purged from server memory.
         </p>
-        <a href="/" class="btn-action-primary" style="display: inline-flex;">
-          Upload New File
-        </a>
+        <div class="recipient-actions-row" style="max-width: 360px; margin: 0 auto;">
+          <a href="/" class="btn-action-primary">
+            <span>Upload File</span>
+          </a>
+          <a href="/?tab=links" class="btn-action-secondary">
+            <span>Shorten URL</span>
+          </a>
+        </div>
       </div>
 
     </main>
 
     <footer class="app-footer">
-      <p>BeamDrop • Ephemeral File Transfer System • Auto-purged in 60 minutes</p>
+      <p>BeamDrop • Ephemeral File Transfer & Link Shortener • Auto-purged in 60 minutes</p>
     </footer>
   </div>
 

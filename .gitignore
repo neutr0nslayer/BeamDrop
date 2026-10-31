@@ -3,3 +3,6 @@ uploads/*
 !uploads/.gitkeep
 .env
 .DS_Store
+.beamdrop.pid
+beamdrop.log
+beamdrop.service

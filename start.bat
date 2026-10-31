@@ -1,6 +1,6 @@
 @echo off
 echo ====================================================
-echo Starting BeamDrop QR File Transfer Server...
+echo Starting BeamDrop QR File Transfer ^& Shortener...
 echo ====================================================
-node server.js
+node deploy.js start
 pause

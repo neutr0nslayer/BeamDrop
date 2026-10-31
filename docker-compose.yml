@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   beamdrop:
     build:
@@ -9,12 +7,12 @@ services:
     restart: unless-stopped
     init: true
     ports:
-      - "3055:3055"
+      - "${PORT:-3055}:${PORT:-3055}"
     environment:
-      - PORT=3055
-      - MAX_FILE_SIZE_MB=150
-      - FILE_TTL_MINUTES=60
-      - PUBLIC_URL=https://qr.fardin.com.bd
+      - PORT=${PORT:-3055}
+      - MAX_FILE_SIZE_MB=${MAX_FILE_SIZE_MB:-150}
+      - FILE_TTL_MINUTES=${FILE_TTL_MINUTES:-60}
+      - PUBLIC_URL=${PUBLIC_URL:-}
     volumes:
       - beamdrop_data:/app/uploads
 

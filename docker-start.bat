@@ -5,7 +5,6 @@ echo ====================================================
 docker compose up -d --build
 echo.
 echo Application started!
-echo - Direct Port: http://localhost:3055
-echo - Domain: https://qr.fardin.com.bd
+echo - Local URL: http://localhost:3055
 echo.
 pause

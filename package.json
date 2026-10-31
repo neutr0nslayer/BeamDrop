@@ -1,16 +1,28 @@
 {
-  "name": "qr-data-transfer",
-  "version": "1.0.0",
-  "description": "Ephemeral QR-based peer-to-peer style file transfer with 150MB limit and 1-hour auto-destruction.",
+  "name": "beamdrop",
+  "version": "1.1.0",
+  "description": "Self-hosted ephemeral QR-based file transfer and URL shortener with auto-destruction and Docker/standalone deployment.",
   "main": "server.js",
+  "bin": {
+    "beamdrop": "./deploy.js"
+  },
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "deploy": "node deploy.js",
+    "deploy:standalone": "node deploy.js standalone",
+    "deploy:docker": "node deploy.js docker",
+    "deploy:systemd": "node deploy.js systemd",
+    "status": "node deploy.js status",
+    "stop": "node deploy.js stop"
   },
   "keywords": [
     "qr-code",
     "file-transfer",
+    "url-shortener",
+    "link-shortener",
     "ephemeral",
+    "self-hosted",
     "docker",
     "airdrop-alternative"
   ],
