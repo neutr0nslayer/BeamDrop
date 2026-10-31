@@ -15,7 +15,6 @@ Drop any file up to **150 MB** or shorten any long URL, scan the generated QR co
 - **📡 Zero-Config LAN & Domain Detection**: Automatically detects your local Wi-Fi LAN IP when run locally (so mobile QR scanning works out of the box) or uses your custom domain (`PUBLIC_URL`) behind any reverse proxy.
 - **📱 Mobile-First Glassmorphism UI**: Symmetrical, uniform button grids and responsive layout optimized for smartphones, tablets, and desktops.
 - **🛠️ Standalone Deployment Tool**: Deploy with a single command (`./deploy.sh` or `node deploy.js`) as a standalone background daemon, Linux `systemd` service, or Docker container.
-- **🛡️ Crash & Restart Resilient**: Atomic metadata/link disk persistence, stream disconnect protection, graceful `SIGTERM` shutdown, and built-in `/health` checks.
 
 ---
 
